@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template de Etiqueta - 80x100mm</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        
+        .etiqueta {
+            width: 80mm;
+            height: 100mm;
+            background: white;
+            border: 2px solid #000;
+            padding: 8mm;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .qr-code {
+            width: 60mm;
+            height: 60mm;
+            border: 1px solid #ccc;
+            margin-bottom: 4mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .origem {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2563eb;
+            text-transform: uppercase;
+            margin-bottom: 2mm;
+            text-align: center;
+        }
+        
+        .cliente {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 2mm;
+            text-align: center;
+            word-wrap: break-word;
+            max-width: 100%;
+        }
+        
+        .local {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 4mm 0;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+        
+        .codigo {
+            font-size: 11px;
+            color: #666;
+            font-family: monospace;
+        }
+        
+        .data {
+            font-size: 9px;
+            color: #999;
+            margin-top: 2mm;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .etiqueta {
+                border: 2px solid #000 !important;
+                page-break-after: always;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+        }
+        
+        @page {
+            size: 80mm 100mm;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print" style="text-align: center; margin-bottom: 20px; padding: 20px; background: white; border-radius: 8px;">
+        <h2>Template de Etiqueta - 80x100mm</h2>
+        <p>Configure sua impressora térmica para etiquetas 80x100mm</p>
+        <button onclick="window.print()" style="padding: 12px 24px; margin-top: 12px; cursor: pointer;">
+            Imprimir Teste
+        </button>
+    </div>
+
+    <!-- Exemplo de etiqueta -->
+    <div class="etiqueta">
+        <div class="qr-code">[QR CODE]</div>
+        <div class="origem">MERCADO LIVRE</div>
+        <div class="cliente">João Silva Santos</div>
+        <div class="local">A1-2-3-1</div>
+        <div class="codigo">VD260001</div>
+        <div class="data">14/02/2026</div>
+    </div>
+</body>
+</html>
