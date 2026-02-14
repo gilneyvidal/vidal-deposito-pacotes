@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operacional - Vidal Depósito</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>📦 Operacional</h2>
+                <p>Acesso de operador</p>
+            </div>
+            
+            <ul class="nav-menu">
+                <li>
+                    <a href="#" class="active" onclick="showSection('entrada'); return false;">
+                        📥 Entrada de Pacote
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="showSection('saida'); return false;">
+                        📤 Saída de Pacote
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="showSection('busca'); return false;">
+                        🔍 Buscar Pacote
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-details">
+                        <div class="user-name" id="userEmail">Operador</div>
+                        <div class="user-role">Operacional</div>
+                    </div>
+                </div>
+                <button onclick="logout()" class="btn-secondary btn-block">
+                    Sair do Sistema
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- SEÇÃO ENTRADA -->
+            <section id="entrada" class="section">
+                <div class="page-header">
+                    <h1>Entrada de Pacote</h1>
+                    <p>Escaneie ou digite o código de rastreio</p>
+                </div>
+
+                <div class="scanner-container">
+                    <h3>📷 Ler Código do Pacote</h3>
+                    <div id="reader" class="scanner-box">
+                        <div class="scanner-overlay"></div>
+                    </div>
+                    
+                    <div class="manual-input">
+                        <input 
+                            type="text" 
+                            id="codigoManual" 
+                            placeholder="Ou digite o código manualmente"
+                        >
+                        <button onclick="buscarCodigoManual()" class="btn-primary">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+
+                <div id="formEntrada" class="form-container" style="display: none;">
+                    <h3 style="margin-bottom: 24px;">Informações do Pacote</h3>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Código de Rastreio</label>
+                            <input type="text" id="codigoRastreio" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Origem *</label>
+                            <select id="origem" required>
+                                <option value="">Selecione...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nome do Cliente *</label>
+                            <input 
+                                type="text" 
+                                id="nomeCliente" 
+                                required 
+                                placeholder="Nome completo do destinatário"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Telefone do Cliente</label>
+                            <input 
+                                type="tel" 
+                                id="telefoneCliente" 
+                                placeholder="(11) 99999-9999"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tamanho do Pacote</label>
+                            <select id="tamanhoPacote" onchange="sugerirNicho()">
+                                <option value="pequeno">Pequeno (até 4 no mesmo espaço)</option>
+                                <option value="medio">Médio (ocupa espaço inteiro)</option>
+                                <option value="grande">Grande (ocupa espaço inteiro)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="sugestao-nicho">
+                        <h4>📍 Alocar em:</h4>
+                        <div class="nicho-code" id="nichoSugerido">-</div>
+                        <p id="infoNicho">Aguardando informações...</p>
+                    </div>
+
+                    <button onclick="confirmarEntrada()" class="btn-primary btn-block" style="margin-top: 24px;">
+                        ✅ Confirmar Entrada e Gerar Etiqueta
+                    </button>
+                </div>
+            </section>
+
+            <!-- SEÇÃO SAÍDA -->
+            <section id="saida" class="section" style="display: none;">
+                <div class="page-header">
+                    <h1>Saída de Pacote</h1>
+                    <p>Escaneie a etiqueta interna para retirada</p>
+                </div>
+
+                <div class="scanner-container">
+                    <h3>📷 Ler Etiqueta Interna</h3>
+                    <div id="readerSaida" class="scanner-box">
+                        <div class="scanner-overlay"></div>
+                    </div>
+                    
+                    <div class="manual-input">
+                        <input 
+                            type="text" 
+                            id="codigoSaidaManual" 
+                            placeholder="Ou digite o código interno (VD...)"
+                        >
+                        <button onclick="buscarSaidaManual()" class="btn-primary">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+
+                <div id="infoSaida" class="form-container" style="display: none;">
+                    <h3 style="margin-bottom: 24px;">Confirmar Saída</h3>
+                    
+                    <div id="dadosPacoteSaida"></div>
+                    
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label>Tipo de Retirada *</label>
+                        <select id="tipoRetirada" required>
+                            <option value="">Selecione...</option>
+                            <option value="transportadora">Transportadora</option>
+                            <option value="cliente">Cliente Final</option>
+                        </select>
+                    </div>
+
+                    <button 
+                        onclick="confirmarSaida()" 
+                        class="btn-primary btn-block btn-success" 
+                        style="margin-top: 24px;"
+                    >
+                        ✅ Confirmar Saída
+                    </button>
+                </div>
+            </section>
+
+            <!-- SEÇÃO BUSCA -->
+            <section id="busca" class="section" style="display: none;">
+                <div class="page-header">
+                    <h1>Buscar Pacote</h1>
+                    <p>Localize pacotes no depósito</p>
+                </div>
+                
+                <div class="form-container" style="margin-bottom: 24px;">
+                    <div style="display: flex; gap: 12px;">
+                        <input 
+                            type="text" 
+                            id="buscaInput" 
+                            placeholder="Nome, código de rastreio, telefone ou código interno..."
+                            style="flex: 1;"
+                        >
+                        <button onclick="buscarPacotes()" class="btn-primary">
+                            🔍 Buscar
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="resultadosBusca" class="table-container"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal Etiqueta -->
+    <div id="modalEtiqueta" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🖨️ Etiqueta Gerada</h3>
+            </div>
+            <div id="etiquetaPreview"></div>
+            <div class="modal-actions">
+                <button onclick="imprimirEtiqueta()" class="btn-primary" style="flex: 1;">
+                    Imprimir 80x100mm
+                </button>
+                <button onclick="fecharModal()" class="btn-secondary">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/operacional.js"></script>
+    
+    <script>
+        // Mostrar email do usuário logado
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                document.getElementById('userEmail').textContent = user.email;
+            }
+        });
+    </script>
+</body>
+</html>
