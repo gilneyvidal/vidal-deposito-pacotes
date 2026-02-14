@@ -3,33 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vidal Depósito - Login</title>
+    <title>Login - Vidal Depósito de Pacotes</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="login-container">
-        <div class="logo">
-            <h1>📦 Vidal Depósito</h1>
-            <p>Sistema de Gestão de Pacotes</p>
-        </div>
-        
-        <form id="loginForm" class="login-form">
-            <div class="input-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" required placeholder="seu@email.com">
+        <div class="login-box">
+            <div class="logo">
+                <div class="logo-icon">📦</div>
+                <h1>Vidal Depósito</h1>
+                <p>Sistema de Gestão de Pacotes</p>
             </div>
             
-            <div class="input-group">
-                <label for="password">Senha</label>
-                <input type="password" id="password" required placeholder="••••••••">
-            </div>
+            <form id="loginForm" class="login-form">
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        required 
+                        placeholder="seu@email.com"
+                        autocomplete="email"
+                    >
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        required 
+                        placeholder="••••••••"
+                        autocomplete="current-password"
+                    >
+                </div>
+                
+                <button type="submit" class="btn-primary">
+                    Entrar no Sistema
+                </button>
+                
+                <div id="errorMessage" class="error-message"></div>
+            </form>
             
-            <button type="submit" class="btn-primary">Entrar</button>
-            <div id="errorMessage" class="error-message"></div>
-        </form>
-        
-        <div class="info">
-            <small>Sistema exclusivo Vidal Design Solutions</small>
+            <div class="login-footer">
+                <p>© 2026 Vidal Design Solutions</p>
+                <p style="margin-top: 4px; font-size: 12px;">v1.0.0</p>
+            </div>
         </div>
     </div>
 
